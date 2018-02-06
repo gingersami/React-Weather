@@ -12,7 +12,7 @@ class WeatherBox extends Component {
     render() {
         return (
             <div className="col m6">
-                <div className='card large'>
+                <div className='card large hoverable'>
                     <div className="card-content">
                         <span className="card-title activator grey-text text-darken-4">{this.props.name}</span>
                         <img className='activator' src={this.props.icon}/>
@@ -23,6 +23,7 @@ class WeatherBox extends Component {
                         <CommentsListBox comments={this.props.comments}/>
                     </div>
                     <CommentForm onSubmitComment={this.props.onSubmitComment} index={this.props.Index}/>
+                    {/*<span><i className='material-icons right'>delete</i></span>*/}
                 </div>
 
             </div>

@@ -45,20 +45,20 @@ x
                 <div>
                     <input type="text"
                            className='input-field'
-                           name='text'
-                           id='text'
-                           placeholder='Enter Text Here'
-                           value={this.state.text}
+                           name='poster'
+                           id='poster'
+                           placeholder='Please Enter your name'
+                           value={this.state.poster}
                            onChange={this.handleInputChange}
 
                     />
                     <input
                         type='text'
                         className='input-field'
-                        name='poster'
-                        id='poster'
-                        placeholder='Please Enter your name'
-                        value={this.state.poster}
+                        name='text'
+                        id='text'
+                        placeholder='Enter Text Here'
+                        value={this.state.text}
                         onChange={this.handleInputChange}/>
                     <span className='input-group'>
                         <button type='submit' className='btn'>Submit Comment</button>

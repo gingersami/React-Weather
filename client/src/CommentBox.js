@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class CommentBox extends Component {
-    render(){
-        return(
-            <li>{this.props.poster} - {this.props.text} <i></i></li>
+    render() {
+        return (
+            <li>
+                <h5>{this.props.poster}</h5>
+                <blockquote>
+                    {this.props.text}
+                </blockquote>
+
+            </li>
         );
     }
 }
