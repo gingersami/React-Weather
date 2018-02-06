@@ -30,7 +30,7 @@ class CommentForm extends Component {
             poster:this.state.poster,
             text:this.state.text
         };
-        this.props.onSubmitComment(comment,this.props.index);
+        this.props.onSubmitComment(comment, this.props.index);
         console.log(this.props);
         this.setState({
             poster:'',
