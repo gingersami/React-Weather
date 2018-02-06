@@ -3,21 +3,10 @@ import React, {Component} from 'react'
 class CommentForm extends Component {
     constructor(props) {
         super(props)
-        this.state = {text: '', poster: '', id: 0 }
+        this.state = {text: '', poster: ''}
         this.onSubmitCommentForm=this.onSubmitCommentForm.bind(this)
         this.handleInputChange=this.handleInputChange.bind(this)
     }
-    //
-    // onSubmitComment(e){
-    //     e.preventDefault()
-    //     var comment = {
-    //         poster:this.state.poster,
-    //         commentText:this.state.text
-    //     }
-    //     this.props.onSubmitComment(comment)
-    //     this.setState({text:'', poster:''}})
-    //
-    // }
 
     handleInputChange(e){
         e.preventDefault()
