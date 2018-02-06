@@ -9,8 +9,9 @@ class WeatherListBox extends Component {
 
     renderBoxes() {
         return this.props.boxes.map((item, index) =>
-            <WeatherBox key={index} index={index} {...item} onSubmitComment={this.props.onSubmitComment}>
+            <WeatherBox key={index} Index={index} {...item} onSubmitComment={this.props.onSubmitComment}>
             </WeatherBox>
+
         )
     }
 

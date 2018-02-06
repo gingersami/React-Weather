@@ -17,11 +17,16 @@ class App extends Component {
         }));
     };
 
-    onSubmitComment(comment,id){
-        console.log(comment)
-        console.log(this.state.weather[0].comments)
-        this.setState(prevState=>({
-            weather: prevState.weather[id].comments.concat(comment)}));
+    onSubmitComment(comment,index){
+        console.log(comment, index)
+        console.log(this.state.weather)
+        this.setState((prevState) => {
+                let updatedComments = prevState.weather[index].comments.concat(comment);
+                let updatedCity = {...prevState.weather[index]};
+                updatedCity.comments = updatedComments;
+                return {weather:[...prevState.weather.filter((value, i)=> i !== index), updatedCity]}
+            },
+            ()=> console.log(this.state.weather[index].comments));
     }
 
 

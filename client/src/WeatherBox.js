@@ -20,9 +20,9 @@ class WeatherBox extends Component {
                     </div>
                     <div className='card-reveal'>
                         <span className="card-title grey-text text-darken-4">Comments for {this.props.name}<i className="material-icons right">close</i></span>
-                        {/*<CommentsListBox comments={this.props.comments}/>*/}
+                        <CommentsListBox comments={this.props.comments}/>
                     </div>
-                    <CommentForm onSubmitComment={this.props.onSubmitComment}/>
+                    <CommentForm onSubmitComment={this.props.onSubmitComment} index={this.props.Index}/>
                 </div>
 
             </div>

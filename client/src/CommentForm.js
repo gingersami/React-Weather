@@ -26,7 +26,12 @@ class CommentForm extends Component {
     }
     onSubmitCommentForm(e){
         e.preventDefault()
-        this.props.onSubmitComment(this.state,this.state.id);
+        var comment={
+            poster:this.state.poster,
+            text:this.state.text
+        };
+        this.props.onSubmitComment(comment,this.props.index);
+        console.log(this.props);
         this.setState({
             poster:'',
             text:''
