@@ -2,39 +2,71 @@ import React, {Component} from 'react';
 import './App.css';
 import WeatherListBox from './WeatherListBox';
 import SearchForm from './SearchForm';
+import axios from 'axios'
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.onSubmitSearchForm = this.onSubmitSearchForm.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this)
-        this.deletePost=this.deletePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
         this.state = { weather: [] }
     }
 
     onSubmitSearchForm(data) {
-        this.setState(prevState => ({
-            weather: [...prevState.weather, data]
-        }));
+        axios.post('/weather', data).then(response=>{
+            this.setState((prevState)=>{return {
+                weather:[...prevState.weather, data]
+            }})
+        })
+
+        // this.setState(prevState => ({
+        //     weather: [...prevState.weather, data]
+        // }));
     };
 
-    onSubmitComment(comment, index) {
-        console.log(comment, index)
-        console.log(this.state.weather)
-        this.setState((prevState) => {
-                let updatedComments = prevState.weather[index].comments.concat(comment);
-                let updatedCity = { ...prevState.weather[index] };
-                updatedCity.comments = updatedComments;
-                return { weather: [...prevState.weather.filter((value, i) => i !== index), updatedCity] }
-            },
-            () => console.log(this.state.weather[index].comments));
+
+
+    componentDidMount() {
+        console.log('getInitialState');
+        axios.get(`/weather`)
+            .then(res => {
+                let serverSaved = res.data;
+                this.setState({ weather: serverSaved },()=>{
+
+                });
+            }).catch(error => {
+            console.log('Error initialState and parsing data', error);
+        });
+        }
+
+
+    onSubmitComment(comment, cityIndex) {
+        this.setState(prevState => {
+            return {
+                weather: prevState.weather.map((city, i) => {
+                    console.log(city)
+                    if (i === cityIndex) {
+                        let updatedComments = city.comments.concat(comment);
+                        let updatedCity = { ...city };
+                        updatedCity.comments = updatedComments;
+                        return updatedCity;
+                    }
+                    return city;
+                })
+            };
+        });
     }
 
-    deletePost(index){
-    this.setState((prevState)=>{
-        return {weather:[...prevState.weather.filter((value,i)=> i !==index)]}
-        }
-    )
+
+    deletePost(id,index) {
+        axios.delete(`/weather/${id}`)
+            .then(res => {
+                console.log(res);
+                this.setState((prevState) => { return { weather: prevState.weather.filter((item, i) => { return (i !== index) }) } });
+            }).catch((err)=>{
+                console.log(err)
+        })
     }
 
 
@@ -46,7 +78,8 @@ class App extends Component {
                     <SearchForm onSubmitForm={this.onSubmitSearchForm}/>
                 </div>
                 <br/>
-                <WeatherListBox boxes={this.state.weather} onSubmitComment={this.onSubmitComment} onClick={this.deletePost}/>
+                <WeatherListBox boxes={this.state.weather} onSubmitComment={this.onSubmitComment}
+                                onClick={this.deletePost}/>
             </div>
         );
     }
