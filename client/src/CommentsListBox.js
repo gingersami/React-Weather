@@ -8,7 +8,7 @@ class CommentsListBox extends Component {
 
     createComments() {
         return this.props.comments.map((comment, index)=>{
-            return <CommentBox key={index} commentIndex={index} cityIndex={this.props.index} {...comment}/>
+            return <CommentBox key={comment._id} commentID={comment._id} cityID={this.props.id} {...comment} deleteComment={this.props.deleteComment}/>
         });
 
     }

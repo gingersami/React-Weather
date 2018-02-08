@@ -42,25 +42,26 @@ class App extends Component {
     }
 
 
-    onSubmitComment(comment, cityIndex,id) {
+    onSubmitComment(comment, cityIndex, id) {
 
-        axios.put(`/weather/${id}/comment`, comment).then(()=>{
-            console.log(id)
+        axios.put(`/weather/${id}/comment`, comment).then((response) => {
+            console.log(response)
 
-        this.setState(prevState => {
-            return {
-                weather: prevState.weather.map((city, i) => {
-                    console.log(city)
-                    if (i === cityIndex) {
-                        let updatedComments = city.comments.concat(comment);
-                        let updatedCity = { ...city };
-                        updatedCity.comments = updatedComments;
-                        return updatedCity;
-                    }
-                    return city;
-                })
-            };
-        });
+            this.setState(prevState => {
+                return {
+                    weather: prevState.weather.map((city, i) => {
+                        if (city._id === id) {
+                            // let updatedComments = city.comments.concat(comment);
+                            let updatedCity = { ...city };
+                            updatedCity.comments = response.data.comments;
+                            return updatedCity;
+                        }
+                        return city;
+                    })
+                };
+            });
+        }).catch((err) => {
+            console.log(err)
         })
     }
 
@@ -82,6 +83,25 @@ class App extends Component {
         })
     }
 
+    deleteComment = (cityID, commID) => {
+        axios.delete(`/weather/${cityID}/${commID}`)
+            .then(res => {
+                console.log(res)
+                this.setState((prevState) => {
+                    return {
+                        weather: prevState.weather.filter((item, i) => {
+                            if (item._id === cityID) {
+                                let updatedCity = { ...item }
+                                updatedCity.comments = res.data.comments
+                                return updatedCity
+                            }
+                            return item
+                        })
+                    }
+                })
+            })
+    }
+
 
     render() {
         return (
@@ -92,7 +112,7 @@ class App extends Component {
                 </div>
                 <br/>
                 <WeatherListBox boxes={this.state.weather} onSubmitComment={this.onSubmitComment}
-                                onClick={this.deletePost}/>
+                                onClick={this.deletePost} deleteComment={this.deleteComment}/>
             </div>
         );
     }

@@ -54,11 +54,11 @@ class WeatherBox extends Component {
                     </div>
                     <div className='card-reveal'>
                         <span className="card-title grey-text text-darken-4">Comments for {this.state.item.name}<i className="material-icons right">close</i></span>
-                        <CommentsListBox comments={this.props.comments}/>
+                        <CommentsListBox comments={this.props.comments} deleteComment={this.props.deleteComment}/>
                     </div>
                     <button type='button' className='activator grey lighten-1 btn'>Open Comments</button>
                     <br/>
-                    <CommentForm onSubmitComment={this.props.onSubmitComment} cityIndex={this.props.cityIndex} id={this.props._id}/>
+                    <CommentForm onSubmitComment={this.props.onSubmitComment} cityIndex={this.props.cityIndex} id={this.props._id} commID={this.props.comments}/>
 
 
                 </div>

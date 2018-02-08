@@ -20,18 +20,20 @@ mongoose.connect('mongodb://dor:123456@ds125938.mlab.com:25938/weater-react')
 
 app.get('/weather', function (req, res) {
     City.find({}).exec(function (err, data) {
-        if (err) { throw err }
+        if (err) {
+            throw err
+        }
         res.send(data);
     });
 });
 
-app.post('/weather', (req, res)=>{
-    let newCity=new City({
-        name:req.body.name,
-        comments:req.body.comments
+app.post('/weather', (req, res) => {
+    let newCity = new City({
+        name: req.body.name,
+        comments: req.body.comments
     })
-    newCity.save((err,data)=>
-    res.send(data)
+    newCity.save((err, data) =>
+        res.send(data)
     )
 })
 
@@ -40,26 +42,30 @@ app.delete('/weather/:id', function (req, res) {
     let id = req.params.id
     console.log(id)
     City.findByIdAndRemove(id, function (err, data) {
-        if (err) { throw err }
+        if (err) {
+            throw err
+        }
         res.send("DELETED")
     })
 })
 
-app.put('/weather/:cityID/comment', (req,res)=>{
-    console.log(req.body)
-    let postid = req.params.cityID
-    console.log(postid)
-    City.findById(req.params.cityID, (err,data)=>{
-        console.log(data)
-        // City.comments.push(req.body, (err,data)=>{
-        //     res.send(data)
-        // })
+app.put('/weather/:cityID/comment', (req, res) => {
+    City.findByIdAndUpdate(req.params.cityID, { $push: { comments: req.body } }, { new: true }, (err, city) => {
+        res.send(city)
     })
 
 })
 
+app.delete('/weather/:cityID/:commID', (req, res)=>{
+    City.findById(req.params.cityID,(err,city)=>{
+        city.comments.pull(req.params.commID);
+        city.save((err,data)=>{
+            res.send(data)
+        })
+    })
+})
 
 
-app.listen(3001, ()=>{
+app.listen(3001, () => {
     console.log('Hello')
 })
