@@ -39,10 +39,23 @@ app.delete('/weather/:id', function (req, res) {
     console.log('inside server delete req')
     let id = req.params.id
     console.log(id)
-    City.findByIdAndRemove(id, function (err, id) {
+    City.findByIdAndRemove(id, function (err, data) {
         if (err) { throw err }
-        res.send(id)
+        res.send("DELETED")
     })
+})
+
+app.put('/weather/:cityID/comment', (req,res)=>{
+    console.log(req.body)
+    let postid = req.params.cityID
+    console.log(postid)
+    City.findById(req.params.cityID, (err,data)=>{
+        console.log(data)
+        // City.comments.push(req.body, (err,data)=>{
+        //     res.send(data)
+        // })
+    })
+
 })
 
 

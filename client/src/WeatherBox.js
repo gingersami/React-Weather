@@ -11,7 +11,7 @@ class WeatherBox extends Component {
     }
 
     deleteBox(){
-        this.props.onClick(this.props._id,this.props.Index)
+        this.props.onClick(this.props._id, this.props.cityIndex)
     }
 
     componentDidMount(){
@@ -35,7 +35,7 @@ class WeatherBox extends Component {
 
                     this.setState({ item: weatherItem });
                 } else {
-                    console.log('connection to apixu failed')
+                    console.log('errr')
                 }
 
             })
@@ -58,7 +58,9 @@ class WeatherBox extends Component {
                     </div>
                     <button type='button' className='activator grey lighten-1 btn'>Open Comments</button>
                     <br/>
-                    <CommentForm onSubmitComment={this.props.onSubmitComment} Index={this.props.Index}/>
+                    <CommentForm onSubmitComment={this.props.onSubmitComment} cityIndex={this.props.cityIndex} id={this.props._id}/>
+
+
                 </div>
 
             </div>

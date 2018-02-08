@@ -14,10 +14,12 @@ class App extends Component {
     }
 
     onSubmitSearchForm(data) {
-        axios.post('/weather', data).then(response=>{
-            this.setState((prevState)=>{return {
-                weather:[...prevState.weather, data]
-            }})
+        axios.post('/weather', data).then(response => {
+            this.setState((prevState) => {
+                return {
+                    weather: [...prevState.weather, response.data]
+                }
+            })
         })
 
         // this.setState(prevState => ({
@@ -26,22 +28,25 @@ class App extends Component {
     };
 
 
-
     componentDidMount() {
         console.log('getInitialState');
         axios.get(`/weather`)
             .then(res => {
                 let serverSaved = res.data;
-                this.setState({ weather: serverSaved },()=>{
+                this.setState({ weather: serverSaved }, () => {
 
                 });
             }).catch(error => {
             console.log('Error initialState and parsing data', error);
         });
-        }
+    }
 
 
-    onSubmitComment(comment, cityIndex) {
+    onSubmitComment(comment, cityIndex,id) {
+
+        axios.put(`/weather/${id}/comment`, comment).then(()=>{
+            console.log(id)
+
         this.setState(prevState => {
             return {
                 weather: prevState.weather.map((city, i) => {
@@ -56,16 +61,24 @@ class App extends Component {
                 })
             };
         });
+        })
     }
 
 
-    deletePost(id,index) {
+    deletePost(id, index) {
+        console.log(index)
         axios.delete(`/weather/${id}`)
             .then(res => {
                 console.log(res);
-                this.setState((prevState) => { return { weather: prevState.weather.filter((item, i) => { return (i !== index) }) } });
-            }).catch((err)=>{
-                console.log(err)
+                this.setState((prevState) => {
+                    return {
+                        weather: prevState.weather.filter((item, i) => {
+                            return (i !== index)
+                        })
+                    }
+                });
+            }).catch((err) => {
+            console.log(err)
         })
     }
 
